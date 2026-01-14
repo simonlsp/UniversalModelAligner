@@ -1,0 +1,63 @@
+CoreBoneSet= {
+    "pelvis", 
+
+    "leg left butt base",
+    "leg right butt base",
+
+    "leg left thigh", 
+    "leg left knee", 
+    "leg left ankle", 
+    "leg left toes", 
+
+    "leg right thigh", 
+    "leg right knee", 
+    "leg right ankle", 
+    "leg right toes", 
+
+    "head neck lower", 
+    "head neck upper", 
+
+    "spine upper", 
+    "spine lower", 
+
+    "arm right shoulder 1", 
+    "arm right shoulder 2", 
+    "arm right wrist", 
+    "arm right elbow", 
+    "arm left shoulder 1", 
+    "arm left shoulder 2", 
+    "arm left wrist", 
+    "arm left elbow", 
+
+    "arm left finger 1a", 
+    "arm left finger 2a", 
+    "arm left finger 3a", 
+    "arm left finger 4a", 
+    "arm left finger 5a", 
+    "arm left finger 1b", 
+    "arm left finger 2b", 
+    "arm left finger 3b", 
+    "arm left finger 4b", 
+    "arm left finger 5b", 
+    "arm left finger 1c", 
+    "arm left finger 2c", 
+    "arm left finger 3c", 
+    "arm left finger 4c", 
+    "arm left finger 5c", 
+
+    "arm right finger 1a", 
+    "arm right finger 2a", 
+    "arm right finger 3a", 
+    "arm right finger 4a", 
+    "arm right finger 5a", 
+    "arm right finger 1b", 
+    "arm right finger 2b", 
+    "arm right finger 3b", 
+    "arm right finger 4b", 
+    "arm right finger 5b", 
+    "arm right finger 1c", 
+    "arm right finger 2c", 
+    "arm right finger 3c", 
+    "arm right finger 4c", 
+    "arm right finger 5c"
+}

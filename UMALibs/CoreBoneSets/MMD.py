@@ -1,0 +1,15 @@
+CoreBoneSet= {
+        "Waist","LowerBody","WaistCancel_L","Leg_L","Knee_L","Ankle_L","AnkleTip_L",
+        "LegD_L","KneeD_L","AnkleD_L","LegTipEX_L","WaistCancel_R","Leg_R","Knee_R",
+        "Ankle_R","AnkleTip_R","LegD_R","KneeD_R","AnkleD_R","LegTipEX_R","UpperBody",
+        "UpperBody2","ShoulderP_L","Shoulder_L","ShoulderC_L","Arm_L","ArmTwist_L",
+        "Elbow_L","HandTwist_L","Wrist_L","IndexFinger1_L","IndexFinger2_L",
+        "IndexFinger3_L","LittleFinger1_L","LittleFinger2_L","LittleFinger3_L",
+        "MiddleFinger1_L","MiddleFinger2_L","MiddleFinger3_L","RingFinger1_L",
+        "RingFinger2_L","RingFinger3_L","Thumb0_L","Thumb1_L","Thumb2_L","ShoulderP_R",
+        "Shoulder_R","ShoulderC_R","Arm_R","ArmTwist_R","Elbow_R","HandTwist_R",
+        "Wrist_R","IndexFinger1_R","IndexFinger2_R","IndexFinger3_R","LittleFinger1_R",
+        "LittleFinger2_R","LittleFinger3_R","MiddleFinger1_R","MiddleFinger2_R",
+        "MiddleFinger3_R","RingFinger1_R","RingFinger2_R","RingFinger3_R","Thumb0_R",
+        "Thumb1_R","Thumb2_R","Neck","Head","Eye_L","Eye_R",
+    }
