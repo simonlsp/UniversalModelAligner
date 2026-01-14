@@ -29,7 +29,7 @@ class MTLFile:
         CurrentMatMTL = GOHDataFile("material","bump", [])
 
         # Diffuse texture is same
-        if self.InputUMAMat.DiffuseTexture:
+        if self.InputUMAMat.DiffuseTexture and os.path.exists(str(self.InputUMAMat.DiffuseTexture)):
             DiffTexOutputName = f"Mat_{MatID}_diff.dds"
             subprocess.check_output([self.NVTTEPath, "-o", f"{os.path.join(OutputDir, DiffTexOutputName)}", "-f", "18", f'"{self.InputUMAMat.DiffuseTexture}"'])
             CurrentMatMTL.SetChildValue("diffuse", f'"{DiffTexOutputName}"')
@@ -39,7 +39,7 @@ class MTLFile:
             if self.InputUMAMat.NormalTexture:
                 pass # Vallina Shader has bug on normal map
         elif self.TargetShader == "FedPBR" or self.TargetShader == "FedToon":
-            if self.InputUMAMat.NormalTexture:
+            if self.InputUMAMat.NormalTexture and os.path.exists(str(self.InputUMAMat.NormalTexture)):
                 NrmTexOutputName = f"Mat_{MatID}_nrm.dds"
                 TempNrmTexPath = self.InputUMAMat.NormalTexture + "_TEMP.png"
                 SaveChannelSwappedNrmPNG(self.InputUMAMat.NormalTexture, TempNrmTexPath)
@@ -50,7 +50,7 @@ class MTLFile:
                 CurrentMatMTL.SetChildValue("bump", '"$/dummyTex/normal"')
         
         # Specular Texture
-        if self.InputUMAMat.SpecularTexture:
+        if self.InputUMAMat.SpecularTexture and os.path.exists(str(self.InputUMAMat.SpecularTexture)):
             DiffTexOutputName = f"Mat_{MatID}_spe.dds"
             subprocess.check_output([self.NVTTEPath, "-o", f"{os.path.join(OutputDir, DiffTexOutputName)}", "-f", "18", f'"{self.InputUMAMat.SpecularTexture}"'])
             CurrentMatMTL.SetChildValue("specular", f'"{DiffTexOutputName}"') # Original tex is used for all shaders
