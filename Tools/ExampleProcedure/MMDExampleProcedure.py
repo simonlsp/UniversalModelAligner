@@ -107,6 +107,6 @@ class UMAProcedure:
 
 if __name__ == "__main__":
     Procedure = UMAProcedure()
-    InputFile = r"D:\TEMP_INPUT\TEST.pmx"
-    OutputDir = r"D:\TEMP_OUTPUT"
+    InputFile = script_args[0]
+    OutputDir = script_args[1]
     Procedure.Execute(InputFile, OutputDir)
