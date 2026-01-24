@@ -213,7 +213,7 @@ def GetRelatedPositionStr(RefDict, BoneName, ScaleRatio):
 def GetRelatedMatrix34Str(RefDict, BoneName, ScaleRatio):
     return  "\t".join(['{:.4f}'.format(value) for matrix in GetRelatedTransformMatrix(RefDict, BoneName, ScaleRatio) for value in matrix])
 
-def GetMDLForBone(RefDict, BoneName, PlyNameList, ScaleRatio = 1.0):
+def GetMDLForBone(RefDict, BoneName, PlyNameList, ScaleRatio = 1.0, AddingPrefix = "", WhiteList = []):
     ChildDict = dict()
     for CurrentBoneName, (Matrix, ParentName) in RefDict.items():
         if ParentName != None:
@@ -224,6 +224,8 @@ def GetMDLForBone(RefDict, BoneName, PlyNameList, ScaleRatio = 1.0):
     if type(PlyNameList) == str:
         PlyNameList = [PlyNameList, ]
 
+    LowerWhiteList = [name.lower().replace(" ", "_") for name in WhiteList]
+
     Revolute_BONE = {"basis", "ik_leftright", "ik_updown", "placement", "foresight2rot"}
     VOXEL_0_BONE = {"body", "foot1l", "foot2l", "foot3l", "foot1r", "foot2r", "foot3r", "ik_leftright", "ik_updown", "head", "gun_back", "hand1r", "hand2r", "right_hand", "hand1l", "hand2l", "left_hand", "foresight2rot", }
     BoneLimitsDict = {"basis": "-30 30", "ik_leftright": "-20 20", "ik_updown": "-40 20", "foresight2rot": "-20 20"}
@@ -233,13 +235,17 @@ def GetMDLForBone(RefDict, BoneName, PlyNameList, ScaleRatio = 1.0):
     OrientationBoneDict = {"basis": "1	0	0	0	-1	0	0	0	1"}
 
     LowerBoneName = BoneName.lower().replace(" ", "_")
+    if LowerBoneName not in LowerWhiteList:
+        WriteBoneName = AddingPrefix.lower().replace(" ", "_") + LowerBoneName
+    else:
+        WriteBoneName = LowerBoneName
 
     CurrentBoneMDL = None
     # BoneName Tag
     if LowerBoneName in Revolute_BONE:
-        CurrentBoneMDL = GOHDataFile("bone", f'revolute "{LowerBoneName}"', [])
+        CurrentBoneMDL = GOHDataFile("bone", f'revolute "{WriteBoneName}"', [])
     else:
-        CurrentBoneMDL = GOHDataFile("bone", f'"{LowerBoneName}"', [])
+        CurrentBoneMDL = GOHDataFile("bone", f'"{WriteBoneName}"', [])
     # Voxel_0 Tag
     if LowerBoneName in VOXEL_0_BONE:
         CurrentBoneMDL.SetChildValue('parameters', '"Voxels=0;"')
@@ -261,7 +267,7 @@ def GetMDLForBone(RefDict, BoneName, PlyNameList, ScaleRatio = 1.0):
 
     if BoneName in ChildDict:
         for ChildBone in ChildDict[BoneName]:
-            CurrentBoneMDL.AddChild(GetMDLForBone(RefDict, ChildBone, PlyNameList, ScaleRatio))
+            CurrentBoneMDL.AddChild(GetMDLForBone(RefDict, ChildBone, PlyNameList, ScaleRatio, AddingPrefix = AddingPrefix, WhiteList = WhiteList))
     
     # MeshTag
     if LowerBoneName == "basis":

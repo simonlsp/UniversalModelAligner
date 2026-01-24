@@ -94,11 +94,13 @@ def GetObjectMaterials(MeshObject, MaterialMode):
     return result
 
 class Exporter:
-    def __init__(self, BoneRef, NVTTEPath, MaterialMode, TargetShader):
+    def __init__(self, BoneRef, NVTTEPath, MaterialMode, TargetShader, AddingSkeletonPrefix = ""):
         self.BoneRef = BoneRef
         self.NVTTEPath = NVTTEPath
         self.MaterialMode = MaterialMode
         self.TargetShader = TargetShader
+        self.AddingSkeletonPrefix = AddingSkeletonPrefix
+        self.PrefixWhiteList = ["Basis", "Skin", "None"]
 
     def Export(self, MeshObject, ExportBaseDir, ExportName):
         ExportRootDir = os.path.join(ExportBaseDir, ExportName)
@@ -133,19 +135,19 @@ class Exporter:
             for MeshPartID, MeshPartObject in enumerate(SeperatedMeshObjectList):
                 PlyFileName = ExportName + f"_Part{MeshPartID}.ply"
                 InputPlyFile = GOHPLYFile.FromBlenderScene(MeshPartObject, OldMatIDToNewMatIDDict, WeightPerVert=1, ScaleRatio = 0.5)
-                InputPlyFile.ToPlyFile(os.path.join(ExportRootDir, PlyFileName))
+                InputPlyFile.ToPlyFile(os.path.join(ExportRootDir, PlyFileName), AddingSkePrefix=self.AddingSkeletonPrefix, SkePrefixWhiteList=self.PrefixWhiteList)
                 PlyFileNameList.append(PlyFileName)
 
         else:
             # Standard Output
             PlyFileName = ExportName + ".ply"
-            InputPlyFile = GOHPLYFile.FromBlenderScene(MeshObject, OldMatIDToNewMatIDDict, WeightPerVert=1, ScaleRatio = 0.5)
-            InputPlyFile.ToPlyFile(os.path.join(ExportRootDir, PlyFileName))
+            InputPlyFile = GOHPLYFile.FromBlenderScene(MeshObject, OldMatIDToNewMatIDDict, WeightPerVert=1, ScaleRatio = 0.5, )
+            InputPlyFile.ToPlyFile(os.path.join(ExportRootDir, PlyFileName), AddingSkePrefix=self.AddingSkeletonPrefix, SkePrefixWhiteList=self.PrefixWhiteList)
             PlyFileNameList.append(PlyFileName)
 
         # MDL Export
         OutputMDL = GOHDataFile("Skeleton", None, [])
-        OutputMDL.AddChild(GetMDLForBone(self.BoneRef, "Basis", PlyFileNameList, ScaleRatio = 0.5))
+        OutputMDL.AddChild(GetMDLForBone(self.BoneRef, "Basis", PlyFileNameList, ScaleRatio = 0.5, AddingPrefix=self.AddingSkeletonPrefix, WhiteList=self.PrefixWhiteList))
         with open(os.path.join(ExportRootDir, f"{ExportName}.mdl"), "w") as OutMDLFile:
             OutMDLFile.write(OutputMDL.ToMTLString())
 

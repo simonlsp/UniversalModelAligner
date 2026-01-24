@@ -63,7 +63,9 @@ class UMAProcedure:
         from UMALibs.Exporters.GOH.GOHExporter import Exporter as GOHExporter
         from UMALibs.BlenderTools.RemoveSkeletonPrefix import Operator as RemoveSkeletonPrefixOperator
         from UMALibs.BlenderTools.RemoveSkeletonPrefix import RemoveRefDictPrefix
-        self.Exporter = GOHExporter(RemoveRefDictPrefix(GOHGANV2RefDict, self.GOHBonePrefix), NVTTE_Path, MaterialMode="MMD", TargetShader="Vallina")
+
+        SkeletonPrefix = "GAN_"
+        self.Exporter = GOHExporter(RemoveRefDictPrefix(GOHGANV2RefDict, self.GOHBonePrefix), NVTTE_Path, MaterialMode="MMD", TargetShader="Vallina", AddingSkeletonPrefix=SkeletonPrefix)
         self.GOHBonePrefixRemover = RemoveSkeletonPrefixOperator(self.GOHBonePrefix)
     
     def Execute(self, InputModelPath, ExportBaseDir):
@@ -100,7 +102,7 @@ class UMAProcedure:
         WeightPurgeTable = MakePurgeTransferTable(ArmatureObject, self.WeightTransferTable, self.GOHBonePrefix)
         TransferBoneWeights(MeshObject, WeightPurgeTable, PurgeVertGroupWitoutBone=True)
         # ---------- You could make a save here ----------
-        
+
         # ---------- Export ----------
         self.GOHBonePrefixRemover.Execute()
         self.Exporter.Export(MeshObject, ExportBaseDir, CurrentModelName)

@@ -479,7 +479,7 @@ class GOHPLYFile:
         return GOHPLYFile(BindingBox,BoneNameList,PLY_Mesh_List,VertexDataStructure,VertexData,FaceCount,FaceData)
 
 
-    def ToPlyFile(self, FilePath, Use32BitFace=False):
+    def ToPlyFile(self, FilePath, Use32BitFace=False, AddingSkePrefix="", SkePrefixWhiteList=[]):
         with open(FilePath, 'wb') as Outputfile:
             # FileSignature
             Outputfile.write('EPLY'.encode('ascii'))
@@ -491,7 +491,14 @@ class GOHPLYFile:
             # SKIN (Bones)
             Outputfile.write('SKIN'.encode('ascii'))
             Outputfile.write(struct.pack('<I', len(self.BoneNameList)))
-            for BoneName in self.BoneNameList:
+
+            SkePrefixWhiteListLower = [name.lower() for name in SkePrefixWhiteList]
+            for RawBoneName in self.BoneNameList:
+                if RawBoneName.lower() not in SkePrefixWhiteListLower:
+                    BoneName = AddingSkePrefix + RawBoneName
+                else:
+                    BoneName = RawBoneName
+                    
                 assert len(BoneName) < 255, "Length of all bone names must be smaller than 255, but current bone's name is [" + BoneName + "]!"
                 Outputfile.write(struct.pack('<B', len(BoneName)))
                 Outputfile.write(BoneName.encode('ascii'))
